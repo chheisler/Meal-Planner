@@ -1,0 +1,44 @@
+{
+	"apple": {
+		"unit": "fruit",
+		"size": 1.0,
+		"carbs": 25.0,
+		"protein": 0.3,
+		"fat": 0.5
+	},
+	"brown rice": {
+		"unit": "g",
+		"size": 100.0,
+		"carbs": 77.0,
+		"protein": 8.0,
+		"fat": 2.9
+	},
+	"chicken breast": {
+		"unit": "g",
+		"size": 100.0,
+		"carbs": 0.0,
+		"protein": 31.0,
+		"fat": 3.6
+	},
+	"ground turkey": {
+		"unit": "g",
+		"size": 100.0,
+		"carbs": 0.0,
+		"protein": 16.9,
+		"fat": 12.5
+	},
+	"olive oil": {
+		"unit": "tbsp",
+		"size": 1.0,
+		"carbs": 0.0,
+		"protein": 0.0,
+		"fat": 14.0
+	},
+	"spinach": {
+		"unit": "c",
+		"size": 1.0,
+		"carbs": 1.1,
+		"protein": 0.9,
+		"fat": 0.1
+	}
+}
