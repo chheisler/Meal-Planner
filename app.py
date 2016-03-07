@@ -8,9 +8,10 @@ from numpy.linalg import solve
 
 def main():
 	parser = ArgumentParser()
-	parser.add_argument('--fixed', nargs='+')
-	parser.add_argument('--servings', type=float, nargs='+')
-	parser.add_argument('--variable', nargs='+')
+	parser.add_argument('foods', nargs='+')
+	parser.add_argument('--add', '-a', nargs='+')
+	parser.add_argument('--servings', '-s', type=float, nargs='+')
+	parser.add_argument('--days', 'd', type=int, default=1)
 	args = parser.parse_args()
 	
 	# get food and configuration information
@@ -43,20 +44,21 @@ def main():
 	print int(carbs), int(protein), int(fat)
 	
 	# subtract flat dietary intakes
-	for food, servings in zip(args.fixed, args.servings):
+	for food, servings in zip(args.add, args.servings):
 		carbs -= foods[food]['carbs'] * servings
 		protein -= foods[food]['protein'] * servings
 		fat -= foods[food]['fat'] * servings
 	
 	# calculate servings for each food
 	nutrition = array([
-		[foods[food]['carbs'] for food in args.variable],
-		[foods[food]['protein'] for food in args.variable],
-		[foods[food]['fat'] for food in args.variable]
+		[foods[food]['carbs'] for food in args.foods],
+		[foods[food]['protein'] for food in args.foods],
+		[foods[food]['fat'] for food in args.foods]
 	])
 	needs = array([carbs, protein, fat])
 	servings = solve(nutrition, needs)
-	print servings
+	
+	# convert servings into unit and print
 	
 if __name__ == '__main__':
 	main()
