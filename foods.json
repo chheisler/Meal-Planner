@@ -1,6 +1,13 @@
 {
+	"93% lean ground turkey": {
+		"unit": "g",
+		"size": 100.0,
+		"carbs": 0.0,
+		"protein": 18.8,
+		"fat": 7.1
+	},
 	"apple": {
-		"unit": "fruit",
+		"unit": "p",
 		"size": 1.0,
 		"carbs": 25.0,
 		"protein": 0.3,
@@ -12,13 +19,6 @@
 		"carbs": 0.8,
 		"protein": 0.6,
 		"fat": 0.2
-	},
-	"brown rice": {
-		"unit": "g",
-		"size": 100.0,
-		"carbs": 77.0,
-		"protein": 8.0,
-		"fat": 2.9
 	},
 	"buckwheat": {
 		"unit": "g",
@@ -34,16 +34,30 @@
 		"protein": 31.0,
 		"fat": 3.6
 	},
-	"ground turkey": {
+	"medium grain brown rice": {
 		"unit": "g",
 		"size": 100.0,
-		"carbs": 0.0,
-		"protein": 16.9,
-		"fat": 12.5
+		"carbs": 77.0,
+		"protein": 8.0,
+		"fat": 2.9
 	},
 	"muscle milk": {
-		"unit": "scoop",
+		"unit": "c",
+		"size": 0.3,
+		"carbs": 9.0,
+		"protein": 16.0,
+		"fat": 6.0
+	},
+	"nostimo": {
+		"unit": "c",
 		"size": 1.0,
+		"carbs": 10.0,
+		"protein": 23.0,
+		"fat": 0.0
+	},
+	"muscle milk": {
+		"unit": "c",
+		"size": 0.3,
 		"carbs": 0.0,
 		"protein": 16.0,
 		"fat": 6.0
@@ -57,9 +71,16 @@
 	},
 	"spinach": {
 		"unit": "g",
-		"size": 30.0,
+		"size": 15.0,
 		"carbs": 1.1,
 		"protein": 0.9,
 		"fat": 0.1
+	},
+	"thomas bagel": {
+		"unit": "p",
+		"size": 1.0,
+		"carbs": 55.0,
+		"protein": 9.0,
+		"fat": 1.0
 	}
 }

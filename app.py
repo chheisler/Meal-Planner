@@ -8,9 +8,10 @@ from numpy.linalg import solve
 
 def main():
 	parser = ArgumentParser()
-	parser.add_argument('--fixed', nargs='+')
-	parser.add_argument('--servings', type=float, nargs='+')
-	parser.add_argument('--variable', nargs='+')
+	parser.add_argument('foods', nargs='+')
+	parser.add_argument('--add', '-a', nargs='+')
+	parser.add_argument('--servings', '-s', type=float, nargs='+')
+	parser.add_argument('--days', '-d', type=int, default=1)
 	args = parser.parse_args()
 	
 	# get food and configuration information
@@ -40,23 +41,29 @@ def main():
 	carbs = calories * diet['carbs'] / CARBS_CAL_PER_G
 	protein = calories * diet['protein'] / PROTEIN_CAL_PER_G
 	fat = calories * diet['fat'] / FAT_CAL_PER_G
-	print int(carbs), int(protein), int(fat)
+	print "\n%dcal %dg carbs %dg protein %dg fat" % (calories, carbs, protein, fat)
 	
 	# subtract flat dietary intakes
-	for food, servings in zip(args.fixed, args.servings):
+	for supplement in diet['supplements']:
+		args.add.append(supplement['name']) 
+		args.servings.append(supplement['servings'])
+	for food, servings in zip(args.add, args.servings):
 		carbs -= foods[food]['carbs'] * servings
 		protein -= foods[food]['protein'] * servings
 		fat -= foods[food]['fat'] * servings
 	
-	# calculate servings for each food
+	# calculate amounts for each food
 	nutrition = array([
-		[foods[food]['carbs'] for food in args.variable],
-		[foods[food]['protein'] for food in args.variable],
-		[foods[food]['fat'] for food in args.variable]
+		[foods[food]['carbs'] for food in args.foods],
+		[foods[food]['protein'] for food in args.foods],
+		[foods[food]['fat'] for food in args.foods]
 	])
-	needs = array([carbs, protein, fat])
-	servings = solve(nutrition, needs)
-	print servings
-	
+	args.foods += args.add
+	servings = list(solve(nutrition, array([carbs, protein, fat]))) + args.servings
+	print '\n' + ', '.join([
+		'%.1f%s %s' % (args.days * serving * foods[food]['size'], foods[food]['unit'], food)
+		for food, serving in zip(args.foods, servings)
+	])
+		
 if __name__ == '__main__':
 	main()
