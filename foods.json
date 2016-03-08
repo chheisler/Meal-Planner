@@ -6,12 +6,26 @@
 		"protein": 0.3,
 		"fat": 0.5
 	},
+	"arugula": {
+		"unit": "g",
+		"size": 20.0,
+		"carbs": 0.8,
+		"protein": 0.6,
+		"fat": 0.2
+	},
 	"brown rice": {
 		"unit": "g",
 		"size": 100.0,
 		"carbs": 77.0,
 		"protein": 8.0,
 		"fat": 2.9
+	},
+	"buckwheat": {
+		"unit": "g",
+		"size": 100.0,
+		"carbs": 72.0,
+		"protein": 13.0,
+		"fat": 3.4
 	},
 	"chicken breast": {
 		"unit": "g",
@@ -27,6 +41,13 @@
 		"protein": 16.9,
 		"fat": 12.5
 	},
+	"muscle milk": {
+		"unit": "scoop",
+		"size": 1.0,
+		"carbs": 0.0,
+		"protein": 16.0,
+		"fat": 6.0
+	},
 	"olive oil": {
 		"unit": "tbsp",
 		"size": 1.0,
@@ -35,8 +56,8 @@
 		"fat": 14.0
 	},
 	"spinach": {
-		"unit": "c",
-		"size": 1.0,
+		"unit": "g",
+		"size": 30.0,
 		"carbs": 1.1,
 		"protein": 0.9,
 		"fat": 0.1
