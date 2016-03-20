@@ -20,6 +20,13 @@
 		"protein": 0.6,
 		"fat": 0.2
 	},
+	"body fortress": {
+		"unit": "g",
+		"size": 33.0,
+		"carbs": 6.0,
+		"protein": 20.0,
+		"fat": 3.5
+	},
 	"buckwheat": {
 		"unit": "g",
 		"size": 100.0,
@@ -37,7 +44,7 @@
 	"medium grain brown rice": {
 		"unit": "g",
 		"size": 100.0,
-		"carbs": 77.0,
+		"carbs": 76.0,
 		"protein": 8.0,
 		"fat": 2.9
 	},
@@ -63,6 +70,13 @@
 		"fat": 6.0
 	},
 	"olive oil": {
+		"unit": "tbsp",
+		"size": 1.0,
+		"carbs": 0.0,
+		"protein": 0.0,
+		"fat": 14.0
+	},
+	"sesame oil": {
 		"unit": "tbsp",
 		"size": 1.0,
 		"carbs": 0.0,

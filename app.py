@@ -32,6 +32,7 @@ def main():
 	calories = BMR_WEIGHT_FACTOR * person['weight'] \
 		+ BMR_HEIGHT_FACTOR * person['height'] \
 		- BMR_AGE_FACTOR * age + sex_bias
+	print "\n%dcal" % calories
 	
 	# calculate nutritional requirements
 	diet = config['diet']
