@@ -11,7 +11,7 @@ def main():
 	parser.add_argument('foods', nargs='+')
 	parser.add_argument('--add', '-a', nargs='+')
 	parser.add_argument('--servings', '-s', type=float, nargs='+')
-	parser.add_argument('--days', '-d', type=int, default=1)
+	parser.add_argument('--days', '-d', type=float, default=1.0)
 	args = parser.parse_args()
 	
 	# get food and configuration information
