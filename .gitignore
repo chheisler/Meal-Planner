@@ -1,2 +1,3 @@
-config.json
+diets.yml
+persons.yml
 *.pyc
