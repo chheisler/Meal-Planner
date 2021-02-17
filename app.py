@@ -1,9 +1,13 @@
+#!/usr/bin/env python3
+
+
 from argparse import ArgumentParser
 from datetime import date
 from food import Food, Ingredient
 from numpy import array
 from numpy.linalg import solve
 from nutrition import Diet, Person
+
 
 def main():
     args = parse_args()
