@@ -1,0 +1,20 @@
+cut:
+  factor: 0.9
+  carbs: 0.40
+  protein: 0.40
+  fat: 0.20
+  supplements:
+    oatmeal: 0
+    apple: 1
+    banana: 1
+    brown sugar: 1
+    nostimo plain: 1
+    gold standard whey: 1
+test:
+  factor: 0.9
+  carbs: 0.45
+  protein: 0.35
+  fat: 0.2
+  supplements:
+    oatmeal: 1
+    apple: 2

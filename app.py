@@ -1,70 +1,63 @@
-from constants import *
 from argparse import ArgumentParser
-from json import load
 from datetime import date
-from math import floor
+from food import Food, Ingredient
 from numpy import array
 from numpy.linalg import solve
+from nutrition import Diet, Person
 
 def main():
-	parser = ArgumentParser()
-	parser.add_argument('foods', nargs='+')
-	parser.add_argument('--add', '-a', nargs='+')
-	parser.add_argument('--servings', '-s', type=float, nargs='+')
-	parser.add_argument('--days', '-d', type=float, default=1.0)
-	args = parser.parse_args()
-	
-	# get food and configuration information
-	config = load(open('config.json', 'r'))
-	foods = load(open('foods.json', 'r'))
-	
-	# calculate base metabolic rate
-	person = config['person']
-	if person['sex'] == 'male':
-		sex_bias = BMR_MALE_BIAS
-	elif person['sex'] == 'female':
-		sex_bias = BMR_FEMALE_BIAS
-	else:
-		raise ConfigException('"sex" must be either "male" or "female"')
-	dob = person['dob']
-	dob = date(year=dob['year'], month=dob['month'], day=dob['day'])
-	age = floor((date.today() - dob).days / DAYS_PER_YEAR)
-	calories = BMR_WEIGHT_FACTOR * person['weight'] \
-		+ BMR_HEIGHT_FACTOR * person['height'] \
-		- BMR_AGE_FACTOR * age + sex_bias
-	print "\n%dcal" % calories
-	
-	# calculate nutritional requirements
-	diet = config['diet']
-	calories *= diet['factor']
-	if diet['carbs'] + diet['protein'] + diet['fat'] != 1.0:
-		raise ConfigException('carbs, protein and fat must sum to 1')
-	carbs = calories * diet['carbs'] / CARBS_CAL_PER_G
-	protein = calories * diet['protein'] / PROTEIN_CAL_PER_G
-	fat = calories * diet['fat'] / FAT_CAL_PER_G
-	print "\n%dcal %dg carbs %dg protein %dg fat" % (calories, carbs, protein, fat)
-	
-	# subtract flat dietary intakes
-	for supplement in diet['supplements']:
-		args.add.append(supplement['name']) 
-		args.servings.append(supplement['servings'])
-	for food, servings in zip(args.add, args.servings):
-		carbs -= foods[food]['carbs'] * servings
-		protein -= foods[food]['protein'] * servings
-		fat -= foods[food]['fat'] * servings
-	
-	# calculate amounts for each food
-	nutrition = array([
-		[foods[food]['carbs'] for food in args.foods],
-		[foods[food]['protein'] for food in args.foods],
-		[foods[food]['fat'] for food in args.foods]
-	])
-	args.foods += args.add
-	servings = list(solve(nutrition, array([carbs, protein, fat]))) + args.servings
-	print '\n' + ', '.join([
-		'%.1f%s %s' % (args.days * serving * foods[food]['size'], foods[food]['unit'], food)
-		for food, serving in zip(args.foods, servings)
-	])
-		
+    args = parse_args()
+    macros = args.person.macros(args.diet)
+    print_macros(args.person, macros)
+    supps = get_supplements(args.diet, args.add_daily, args.add_total, args.days)
+    macros = adjust_macros(macros, supps)
+    ingrds = solve_ingredients(args.foods, macros, args.days)
+    for i in ingrds:
+        print(i)
+
+
+def parse_args():
+    parser = ArgumentParser()
+    parser.add_argument('person', type=Person.load)
+    parser.add_argument('diet', type=Diet.load)
+    parser.add_argument('foods', nargs='+', type=Food.load)
+    parser.add_argument('--add-total', '-t', nargs='+', type=Ingredient.parse, default=[])
+    parser.add_argument('--add-daily', '-d', nargs='+', type=Ingredient.parse, default=[])
+    parser.add_argument('--days', '-D', type=float, default=1.0)
+    return parser.parse_args()
+
+
+def get_supplements(diet, dailies, totals, days):
+    return diet.supplements + dailies + [t / days for t in totals]
+
+
+def adjust_macros(macros, supps):
+    carbs, protein, fat = macros
+    for supp in supps:
+        carbs -= supp.carbs
+        protein -= supp.protein
+        fat -= supp.fat
+    return carbs, protein, fat
+
+
+def solve_ingredients(foods, macros, days):
+    nutrition = array([
+        [f.carbs for f in foods],
+        [f.protein for f in foods],
+        [f.fat for f in foods]
+    ])
+    carbs, protein, fat = macros
+    servings = solve(nutrition, array([carbs, protein, fat]))
+    return [Ingredient(f, s) * days for f, s in zip(foods, servings)]
+
+
+def print_macros(person, macros):
+    carbs, protein, fat = macros
+    print(person.weight)
+    print(f'carbs: {carbs:.2f}g')
+    print(f'protein: {protein:.2f}g ({protein / person.weight:.2f}g/lb)')
+    print(f'fat: {fat:.2f}g')
+
+
 if __name__ == '__main__':
-	main()
+    main()
