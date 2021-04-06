@@ -62,9 +62,11 @@ class Person(object):
         else:
             raise ConfigException('"sex" must be either "male" or "female"')
 
+    def calories(self, diet):
+        return self.bmr * diet.factor
 
     def macros(self, diet):
-        calories = self.bmr * diet.factor
+        calories = self.calories(diet)
         carbs = calories * diet.carbs / CARBS_CAL_PER_G
         protein = calories * diet.protein / PROTEIN_CAL_PER_G
         fat = calories * diet.fat / FAT_CAL_PER_G

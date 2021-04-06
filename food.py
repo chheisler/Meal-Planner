@@ -49,7 +49,7 @@ class Ingredient(object):
         self._food = food
         self._servings = servings
 
-    INGREDIENT_PATTERN = re.compile(r'^(?P<name>[\w ]+):(?P<amount>\d+(?:\.\d+)?)(?P<unit>[a-zA-Z])$')
+    INGREDIENT_PATTERN = re.compile(r'^(?P<name>[\w ]+):(?P<amount>\d+(?:\.\d+)?)(?P<unit>[a-zA-Z]+)$')
 
     @classmethod 
     def parse(cls, raw):

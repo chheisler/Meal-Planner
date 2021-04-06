@@ -11,6 +11,7 @@ from nutrition import Diet, Person
 
 def main():
     args = parse_args()
+    print_calories(args.person, args.diet)
     macros = args.person.macros(args.diet)
     print_macros(args.person, macros)
     supps = get_supplements(args.diet, args.add_daily, args.add_total, args.days)
@@ -53,6 +54,10 @@ def solve_ingredients(foods, macros, days):
     carbs, protein, fat = macros
     servings = solve(nutrition, array([carbs, protein, fat]))
     return [Ingredient(f, s) * days for f, s in zip(foods, servings)]
+
+
+def print_calories(person, diet):
+    print(f'calories: {person.calories(diet):.2f}')
 
 
 def print_macros(person, macros):
